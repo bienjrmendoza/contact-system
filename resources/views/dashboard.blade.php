@@ -15,7 +15,7 @@
                     </button>
                 </div>
 
-                <table class="table mt-2" id='contact-table'>
+                <table class="table mt-2" id='contacts-table'>
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>

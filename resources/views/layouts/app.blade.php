@@ -43,7 +43,6 @@
         <script>
             $(document).ready(function() {
                 $('#search-btn').on('click', function() {
-                    var query = $(this).val();
                     var query = $('#search').val();
 
                     $.ajax({
@@ -53,20 +52,22 @@
                         success: function(data) {
                             $('#contacts-table tbody').empty();
 
-                            $.each(data, function(index, contact) {
-                                $('#contacts-table tbody').append(
-                                    `<tr>
-                                        <td>${contact.name}</td>
-                                        <td>${contact.company}</td>
-                                        <td>${contact.phone}</td>
-                                        <td>${contact.email}</td>
-                                        <td>
-                                            <button class="btn btn-warning btn-sm edit-btn" data-id="${contact.id}">Edit</button>
-                                            <button class="btn btn-danger btn-sm delete-btn" data-id="${contact.id}">Delete</button>
-                                        </td>
-                                    </tr>`
-                                );
-                            });
+                            if (Array.isArray(data) && data.length > 0) {
+                                $.each(data, function(index, contact) {
+                                    $('#contacts-table tbody').append(
+                                        `<tr>
+                                            <td>${contact.name}</td>
+                                            <td>${contact.company}</td>
+                                            <td>${contact.phone}</td>
+                                            <td>${contact.email}</td>
+                                            <td>
+                                                <button class="btn btn-warning btn-sm edit-btn" data-id="${contact.id}">Edit</button>
+                                                <button class="btn btn-danger btn-sm delete-btn" data-id="${contact.id}">Delete</button>
+                                            </td>
+                                        </tr>`
+                                    );
+                                });
+                            }
                         }
                     });
                 });
