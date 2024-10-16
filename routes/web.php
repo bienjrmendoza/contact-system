@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/thank-you', function () {
+        return view('thank-you');
+    })->name('thank-you');
+
+    Route::get('dashboard', 'App\Http\Controllers\ContactsController@index')->name('dashboard');
+    Route::get('contact/search', 'App\Http\Controllers\ContactsController@search')->name('contact.search');
+    Route::resource('contact', 'App\Http\Controllers\ContactsController');
+});
+
+require __DIR__.'/auth.php';
