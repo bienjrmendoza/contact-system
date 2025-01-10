@@ -24,7 +24,7 @@ class ContactsController extends Controller
         $sort = $request->input('sort', 'asc');
         $page = $request->input('page', 1);
 
-        $contacts = Contact::where('user_id', '=', $user->id)->orderBy($order, $sort)->paginate(2, ['*'], 'page', $page);
+        $contacts = Contact::where('user_id', '=', $user->id)->orderBy($order, $sort)->paginate(5, ['*'], 'page', $page);
 
         return view('/dashboard', ['contacts' => $contacts]);
     }
