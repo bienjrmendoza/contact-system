@@ -24,7 +24,7 @@ class ContactsController extends Controller
         $sort = $request->input('sort', 'asc');
         $page = $request->input('page', 1);
 
-        $contacts = Contact::where('user_id', '=', $user->id)->orderBy($order, $sort)->paginate(10, ['*'], 'page', $page);
+        $contacts = Contact::where('user_id', '=', $user->id)->orderBy($order, $sort)->paginate(2, ['*'], 'page', $page);
 
         return view('/dashboard', ['contacts' => $contacts]);
     }
@@ -138,12 +138,13 @@ class ContactsController extends Controller
         $page = $request->input('page', 1);
 
         $contacts = Contact::where('user_id', '=', $user->id)
-            ->orWhere('name', 'LIKE', "%{$query}%")
-            ->orWhere('company', 'LIKE', "%{$query}%")
-            ->orWhere('phone', 'LIKE', "%{$query}%")
-            ->orWhere('email', 'LIKE', "%{$query}%")
-            ->get();
+            ->where(function($contact) use ($query) {
+                $contact->orWhere('name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('company', 'LIKE', '%' . $query . '%')
+                    ->orWhere('phone', 'LIKE', '%' . $query . '%')
+                    ->orWhere('email', 'LIKE', '%' . $query . '%');
+            })->paginate(2, ['*'], 'page', $page);
 
-        return view('partials.contact_search', compact('contacts'))->render();
+        return response()->json($contacts);
     }
 }

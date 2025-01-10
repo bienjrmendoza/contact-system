@@ -39,41 +39,6 @@
             @show
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#search-btn').on('click', function() {
-                    var query = $('#search').val();
-
-                    $.ajax({
-                        url: "{{ route('contact.search') }}",
-                        method: "GET",
-                        data: { query: query },
-                        success: function(data) {
-                            $('#contacts-table tbody').empty();
-
-                            if (Array.isArray(data) && data.length > 0) {
-                                $.each(data, function(index, contact) {
-                                    $('#contacts-table tbody').append(
-                                        `<tr>
-                                            <td>${contact.name}</td>
-                                            <td>${contact.company}</td>
-                                            <td>${contact.phone}</td>
-                                            <td>${contact.email}</td>
-                                            <td>
-                                                <button class="btn btn-warning btn-sm edit-btn" data-id="${contact.id}">Edit</button>
-                                                <button class="btn btn-danger btn-sm delete-btn" data-id="${contact.id}">Delete</button>
-                                            </td>
-                                        </tr>`
-                                    );
-                                });
-                            }
-                        }
-                    });
-                });
-            });
-        </script>
-
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
